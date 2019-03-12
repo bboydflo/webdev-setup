@@ -33,6 +33,12 @@ npm test
 - React
 - Allows live tweaking of webpack config and restarts dev environment when config gets changed
 
+### Inspired by these projects
+
+1. [https://createapp.dev/](https://createapp.dev/)
+2. [http://learn.humanjavascript.com/react-ampersand](http://learn.humanjavascript.com/react-ampersand)
+3. [survivejs webpack book](https://survivejs.com/webpack/foreword)
+
 ### Todo
 
 - [ ] update readme.md
