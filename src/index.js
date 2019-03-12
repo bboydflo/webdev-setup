@@ -6,9 +6,15 @@ import svgIcon from "./images/ccheart_black.svg";
 ready(() => {
   console.log("hello webpack");
 
-  var img = document.createElement("img");
+  // testing images
+  const img = document.createElement("img");
   img.width = 24;
   img.height = 24;
   img.src = svgIcon;
   document.body.appendChild(img);
+
+  // testing woff fonts
+  const h1 = document.createElement("h1");
+  h1.innerText = "Hello world";
+  document.body.appendChild(h1);
 });

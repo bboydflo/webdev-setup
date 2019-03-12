@@ -14,6 +14,7 @@ exports.paths = PATHS;
 exports.commonConfig = merge([
   parts.loadJS({ include: PATHS.src, exclude: /node_modules/ }),
   parts.loadCSS(),
+  parts.loadFonts(),
   {
     resolve: {
       modules: ["node_modules", path.resolve(__dirname, "src")],
