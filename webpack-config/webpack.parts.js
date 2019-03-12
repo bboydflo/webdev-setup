@@ -12,19 +12,35 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
   }
 });
 
-exports.loadSCSS = ({ include, exclude } = {}) => ({
-  module: {
-    rules: [
-      {
-        test: /\.scss$/,
-        include,
-        exclude,
-
-        use: ["style-loader", "css-loader", "sass-loader"]
-      }
-    ]
+exports.loadSCSS = ({ mode, include, exclude } = {}) => {
+  if (mode === "development") {
+    return {
+      test: /\.(scss|sass)$/,
+      use: [
+        "css-loader",
+        {
+          loader: "fast-sass-loader",
+          options: {
+            // includePaths: [ ... ]
+          }
+        }
+      ]
+    };
   }
-});
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.scss$/,
+          include,
+          exclude,
+
+          use: ["style-loader", "css-loader", "sass-loader"]
+        }
+      ]
+    }
+  };
+};
 
 exports.loadJS = ({ include, exclude } = {}) => ({
   module: {
