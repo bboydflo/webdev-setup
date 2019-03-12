@@ -15,16 +15,23 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
 exports.loadSCSS = ({ mode, include, exclude } = {}) => {
   if (mode === "development") {
     return {
-      test: /\.(scss|sass)$/,
-      use: [
-        "css-loader",
-        {
-          loader: "fast-sass-loader",
-          options: {
-            // includePaths: [ ... ]
+      module: {
+        rules: [
+          {
+            test: /\.(scss|sass)$/,
+            use: [
+              "style-loader",
+              "css-loader",
+              {
+                loader: "fast-sass-loader",
+                options: {
+                  // includePaths: [ ... ]
+                }
+              }
+            ]
           }
-        }
-      ]
+        ]
+      }
     };
   }
   return {
