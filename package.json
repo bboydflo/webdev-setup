@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --hot --env development\"",
-    "start:prod": "webpack --mode=development",
+    "start:prod": "webpack --env development",
     "build": "webpack --env production",
     "build:stats": "webpack --env production --json > stats.json",
     "test": "npm test",
