@@ -4,8 +4,15 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const parts = require("./webpack.parts");
 
-module.exports = merge([
-  parts.loadJS({ exclude: /node_modules/ }),
+const PATHS = {
+  src: path.join(__dirname, "src"),
+  nodeModules: path.join(__dirname, "node_modules")
+};
+
+exports.paths = PATHS;
+
+exports.commonConfig = merge([
+  parts.loadJS({ include: PATHS.src, exclude: /node_modules/ }),
   parts.loadCSS(),
   {
     resolve: {

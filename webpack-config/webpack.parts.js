@@ -58,6 +58,7 @@ exports.loadJS = ({ include, exclude } = {}) => ({
       {
         test: /\.(js|jsx)$/,
         use: "babel-loader",
+        include,
         exclude
       }
     ]
