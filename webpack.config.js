@@ -8,7 +8,8 @@ const parts = require("./webpack-config/webpack.parts");
 const commonConfig = require("./webpack-config/webpack.common");
 
 const PATHS = {
-  src: path.join(__dirname, "src")
+  src: path.join(__dirname, "src"),
+  nodeModules: path.join(__dirname, "node_modules")
 };
 
 const developmentConfig = merge([
@@ -22,7 +23,7 @@ const developmentConfig = merge([
       // Ignore node_modules so CPU usage with poll watching drops significantly.
       // not sure is necessary when dev server doesn't use polling
       // https://survivejs.com/webpack/developing/webpack-dev-server/#polling-instead-of-watching-files
-      new webpack.WatchIgnorePlugin([path.join(__dirname, "node_modules")]),
+      new webpack.WatchIgnorePlugin([PATHS.nodeModules]),
       new ErrorOverlayPlugin()
     ]
   },
