@@ -57,4 +57,7 @@ node_modules/
 # next.js build output
 .next
 
+# webpack stats
+stats.json
+
 dist

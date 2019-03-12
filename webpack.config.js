@@ -1,9 +1,15 @@
 const path = require("path");
+const glob = require("glob");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 
+const parts = require("./webpack-config/webpack.parts");
 const commonConfig = require("./webpack-config/webpack.common");
+
+const PATHS = {
+  src: path.join(__dirname, "src")
+};
 
 const developmentConfig = merge([
   {
@@ -19,20 +25,25 @@ const developmentConfig = merge([
       new webpack.WatchIgnorePlugin([path.join(__dirname, "node_modules")]),
       new ErrorOverlayPlugin()
     ]
-  }
+  },
+  parts.loadSCSS()
 ]);
 
 const productionConfig = merge([
   {
     devtool: "source-map"
-  }
+  },
+  parts.extractCSS({
+    use: ["css-loader", "sass-loader"]
+  }),
+  parts.purifyCSS({
+    paths: glob.sync(`${PATHS.src}/**/*.js`, { nodir: true })
+  })
 ]);
 
 module.exports = mode => {
   if (mode === "development") {
-    // return merge(commonConfig, developmentConfig, { mode });
-    return merge(developmentConfig, commonConfig(mode), { mode });
+    return merge(developmentConfig, commonConfig, { mode });
   }
-  // return merge(commonConfig, productionConfig, { mode });
-  return merge(productionConfig, commonConfig(mode), { mode });
+  return merge(productionConfig, commonConfig, { mode });
 };

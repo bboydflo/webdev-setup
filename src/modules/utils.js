@@ -9,7 +9,17 @@ function insertArrayAt(array, index, arrayToInsert) {
   return array;
 }
 
-module.exports = {
-  insertAt,
-  insertArrayAt
-};
+// http://youmightnotneedjquery.com/#ready
+function ready(fn) {
+  if (
+    document.attachEvent
+      ? document.readyState === "complete"
+      : document.readyState !== "loading"
+  ) {
+    fn();
+  } else {
+    document.addEventListener("DOMContentLoaded", fn);
+  }
+}
+
+export { ready, insertAt, insertArrayAt };

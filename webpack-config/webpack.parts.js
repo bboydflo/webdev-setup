@@ -1,3 +1,6 @@
+const PurifyCSSPlugin = require("purifycss-webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
     rules: [
@@ -67,3 +70,29 @@ exports.devServer = {
     overlay: true
   }
 };
+
+exports.extractCSS = ({ include, exclude, use = [] }) => {
+  // Output extracted CSS to a file
+  const plugin = new MiniCssExtractPlugin({
+    filename: "[name].css"
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.s?css$/,
+          include,
+          exclude,
+
+          use: [MiniCssExtractPlugin.loader].concat(use)
+        }
+      ]
+    },
+    plugins: [plugin]
+  };
+};
+
+exports.purifyCSS = ({ paths }) => ({
+  plugins: [new PurifyCSSPlugin({ paths })]
+});

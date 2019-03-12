@@ -1,3 +1,9 @@
+import { ready } from "./modules/utils";
+
 import "./css/styles.scss";
 
-console.log("Hello florin");
+ready(() => {
+  // var img = document.createElement('img')
+  // img.src = ''
+  console.log("hello webpack");
+});

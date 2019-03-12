@@ -20,6 +20,14 @@ npm start
 npm run build
 ```
 
+## build stats
+
+```sh
+npm run build:stats
+```
+
+Then upload `stats.json` to [official webpack analyse tool](https://webpack.github.io/analyse/)
+
 ## test
 
 ```sh
@@ -29,9 +37,10 @@ npm test
 ### Features
 
 - ES2015+
-- Babel
+- environment aware Babel configuration
 - React
 - Sass compilation
+- will eliminate unused css using `purifycss-webpack` plugin
 - Allows live tweaking of webpack config and restarts dev environment when config gets changed
 
 ### Inspired by these projects
