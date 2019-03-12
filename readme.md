@@ -51,8 +51,6 @@ npm test
 
 ### Todo
 
-- [ ] update readme.md
-- [ ] add new spectrum component workflow
 - [ ] add [mini-html-webpack-plugin](https://www.npmjs.com/package/mini-html-webpack-plugin) to easier maintain the html template
 - [ ] experiment with different webpack-html-plugin plugins, check [this website](https://survivejs.com/webpack/developing/getting-started/)
-- [ ] improve webpack configuration for different environments check [webpack-merge](https://survivejs.com/webpack/developing/composing-configuration/#setting-up-webpack-merge)
+- [ ] better split webpack dev/test/prod configuration using [webpack-merge](https://survivejs.com/webpack/developing/composing-configuration/#setting-up-webpack-merge)
