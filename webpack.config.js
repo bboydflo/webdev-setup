@@ -21,6 +21,7 @@ const developmentConfig = merge([
       new ErrorOverlayPlugin()
     ]
   },
+  parts.loadImages(),
   parts.loadSCSS()
 ]);
 
@@ -28,6 +29,12 @@ const productionConfig = merge([
   {
     devtool: "source-map"
   },
+  parts.loadImages({
+    options: {
+      limit: 15000,
+      name: "[name].[ext]"
+    }
+  }),
   parts.extractCSS({
     use: ["css-loader", "sass-loader"]
   }),

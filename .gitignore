@@ -57,7 +57,12 @@ node_modules/
 # next.js build output
 .next
 
+# custom gitignore rules
 # webpack stats
 stats.json
 
+# distribution folder
 dist
+
+# macos extra files
+**/.DS_Store

@@ -97,3 +97,19 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
 exports.purifyCSS = ({ paths }) => ({
   plugins: [new PurifyCSSPlugin({ paths })]
 });
+
+exports.loadImages = ({ include, exclude, options } = {}) => ({
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpe?g)$/,
+        include,
+        exclude,
+        use: {
+          loader: "url-loader",
+          options
+        }
+      }
+    ]
+  }
+});
