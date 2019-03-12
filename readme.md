@@ -31,6 +31,7 @@ npm test
 - ES2015+
 - Babel
 - React
+- Sass compilation
 - Allows live tweaking of webpack config and restarts dev environment when config gets changed
 
 ### Inspired by these projects
