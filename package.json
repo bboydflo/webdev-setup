@@ -1,0 +1,42 @@
+{
+  "name": "dev-setup",
+  "version": "1.0.0",
+  "description": "minimal webpack setup for development",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --hot --env development\"",
+    "start:prod": "webpack --mode=development",
+    "build": "webpack --mode production",
+    "test": "npm test",
+    "serve": "cd dist && serve"
+  },
+  "keywords": [
+    "webpack",
+    "dev-setup",
+    "boilerplate"
+  ],
+  "author": "fco",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
+    "error-overlay-webpack-plugin": "^0.1.6",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.10",
+    "serve": "^10.1.2",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1"
+  },
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-hot-loader": "^4.8.0"
+  }
+}
