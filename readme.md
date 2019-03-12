@@ -42,6 +42,7 @@ npm test
 - Sass compilation
 - will eliminate unused css using `purifycss-webpack` plugin
 - Allows live tweaking of webpack config and restarts dev environment when config gets changed
+- assets loaders (png, jpg, svg etc.)
 
 ### Inspired by these projects
 

@@ -109,6 +109,12 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
           loader: "url-loader",
           options
         }
+      },
+      {
+        test: /\.svg$/,
+        include,
+        exclude,
+        use: "file-loader"
       }
     ]
   }
