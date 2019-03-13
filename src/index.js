@@ -15,6 +15,6 @@ ready(() => {
 
   // testing woff fonts
   const h1 = document.createElement("h1");
-  h1.innerText = "Hello florin";
+  h1.innerText = "Hello webpack";
   document.body.appendChild(h1);
 });

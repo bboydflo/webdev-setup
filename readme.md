@@ -59,3 +59,4 @@ npm test
 - [ ] storybook support
 - [ ] deploy to now, github pages, surge, etc.
 - [ ] CI setup
+- [ ] fix `open-browser-webpack-plugin` security issue ([check this pr](https://github.com/baldore/open-browser-webpack-plugin/pull/30))
