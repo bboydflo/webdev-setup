@@ -1,6 +1,8 @@
 module.exports = api => {
   const plugins = ["@babel/plugin-syntax-dynamic-import"];
-  if (api.env("production")) {
+
+  // inject react-hot-loader babel plugin in development only
+  if (api.env("development")) {
     plugins.unshift("react-hot-loader/babel");
   }
   return {
