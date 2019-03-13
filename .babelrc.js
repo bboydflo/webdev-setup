@@ -1,4 +1,5 @@
 module.exports = api => {
+  // allows lazy loading of modules and code splitting
   const plugins = ["@babel/plugin-syntax-dynamic-import"];
 
   // inject react-hot-loader babel plugin in development only

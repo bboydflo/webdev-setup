@@ -1,14 +1,11 @@
 @font-face {
   font-family: "BELLABOO-Regular";
-  src: url("../fonts//Bellaboo/webfont/BELLABOO-Regular.woff") format("woff");
+  // src: url("../fonts/Bellaboo/webfont/BELLABOO-Regular.woff") format("woff");
+  src: url("../fonts/Bellaboo/webfont/BELLABOO-Regular.eot") format("eot"),
+    url("../fonts/Bellaboo/webfont/BELLABOO-Regular.woff") format("woff"),
+    url("../fonts/Bellaboo/webfont/BELLABOO-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
-
-  /* font-family: "myfontfamily";
-  src: url("./fonts/myfontfile.woff2") format("woff2"),
-    url("./fonts/myfontfile.woff") format("woff"),
-    url("./fonts/myfontfile.eot") format("embedded-opentype"),
-    url("./fonts/myfontfile.ttf") format("truetype"); */
 }
 
 body {
@@ -19,7 +16,8 @@ body {
   background-position: center;
 }
 
-h1 {
+h1,
+.fancy-text {
   font-family: "BELLABOO-Regular", sans-serif;
 }
 

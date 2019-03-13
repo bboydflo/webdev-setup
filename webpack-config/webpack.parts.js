@@ -1,4 +1,4 @@
-const PurifyCSSPlugin = require("purifycss-webpack");
+const PurgeCssPlugin = require("purgecss-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
@@ -75,7 +75,7 @@ exports.devServer = {
 exports.extractCSS = ({ include, exclude, use = [] }) => {
   // Output extracted CSS to a file
   const plugin = new MiniCssExtractPlugin({
-    filename: "[name].css"
+    filename: "css/[name].css"
   });
 
   return {
@@ -95,7 +95,7 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
 };
 
 exports.purifyCSS = ({ paths }) => ({
-  plugins: [new PurifyCSSPlugin({ paths })]
+  plugins: [new PurgeCssPlugin({ paths })]
 });
 
 exports.loadImages = ({ include, exclude, options } = {}) => ({
@@ -114,35 +114,27 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
         test: /\.svg$/,
         include,
         exclude,
-        use: "file-loader"
+        use: {
+          loader: "file-loader",
+          options
+        }
       }
     ]
   }
 });
 
 // https://survivejs.com/webpack/loading/fonts/
-exports.loadFonts = () => ({
+exports.loadFonts = ({ mode }) => ({
   module: {
     rules: [
       {
-        // Match woff2 in addition to patterns like .woff?v=1.1.1.
-        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(ttf|eot|woff|woff2)$/,
         use: {
-          loader: "url-loader",
+          loader: "file-loader",
           options: {
-            // Limit at 50k. Above that it emits separate files
-            limit: 50000,
-
-            // url-loader sets mimetype if it's passed.
-            // Without this it derives it from the file extension
-            mimetype: "application/font-woff",
-
-            // Output below fonts directory
-            // name: "./fonts/[name].[ext]",
             name: "fonts/[name].[ext]",
-            // name: "[name].[ext]",
-
-            publicPath: "."
+            outputPath: mode === "development" ? "" : "/"
+            // publicPath: "/"
           }
         }
       }
