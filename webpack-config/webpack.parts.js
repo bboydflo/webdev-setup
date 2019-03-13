@@ -128,7 +128,7 @@ exports.loadFonts = () => ({
         // Match woff2 in addition to patterns like .woff?v=1.1.1.
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: "url-loader",
+          loader: "file-loader",
           options: {
             // Limit at 50k. Above that it emits separate files
             limit: 50000,
@@ -138,9 +138,11 @@ exports.loadFonts = () => ({
             mimetype: "application/font-woff",
 
             // Output below fonts directory
-            name: "./fonts/[name].[ext]"
+            // name: "./fonts/[name].[ext]"
+            name: "fonts/[name].[ext]"
+            // name: "[name].[ext]"
 
-            // publicPath: "fonts"
+            // publicPath: "./fonts"
           }
         }
       }
