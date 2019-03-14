@@ -20,6 +20,12 @@ npm start
 npm run build
 ```
 
+## preview in production
+
+```sh
+npm run build && npm run serve
+```
+
 ## build stats
 
 ```sh
@@ -36,13 +42,13 @@ npm test
 
 ### Features
 
-- ES2015+
-- environment aware Babel configuration
-- React
+- hot module reloading for CSS and Javascript
+- ES2015 and environment aware Babel configuration
+- React support
 - Sass compilation
-- will eliminate unused css using `purifycss-webpack` plugin
-- Allows live tweaking of webpack config and restarts dev environment when config gets changed
-- assets loaders (png, jpg, svg etc.)
+- ~~will eliminate unused css using `purifycss-webpack` plugin~~
+- Allows live tweaking of main webpack config and restarts dev environment when it gets changed
+- assets loaders (png, jpg, svg, woff, ttf, eof etc.)
 
 ### Inspired by these projects
 
@@ -54,9 +60,9 @@ npm test
 
 - [ ] add [mini-html-webpack-plugin](https://www.npmjs.com/package/mini-html-webpack-plugin) to easier maintain the html template
 - [ ] experiment with different webpack-html-plugin plugins, check [this website](https://survivejs.com/webpack/developing/getting-started/)
-- [ ] better split webpack dev/test/prod configuration using [webpack-merge](https://survivejs.com/webpack/developing/composing-configuration/#setting-up-webpack-merge)
 - [ ] testing with jest and cypress
 - [ ] storybook support
 - [ ] deploy to now, github pages, surge, etc.
 - [ ] CI setup
 - [ ] fix `open-browser-webpack-plugin` security issue ([check this pr](https://github.com/baldore/open-browser-webpack-plugin/pull/30))
+- [ ] add yeoman generator

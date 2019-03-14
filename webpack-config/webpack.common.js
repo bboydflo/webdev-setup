@@ -8,7 +8,6 @@ const parts = require("./webpack.parts");
 
 const PATHS = {
   src: path.join(__dirname, "src"),
-  dist: path.join(__dirname, "dist"),
   context: path.resolve(__dirname, "src"),
   nodeModules: path.join(__dirname, "node_modules")
 };
