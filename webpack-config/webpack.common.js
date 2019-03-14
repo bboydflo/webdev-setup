@@ -1,5 +1,6 @@
 const path = require("path");
 const merge = require("webpack-merge");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
@@ -38,6 +39,8 @@ exports.commonConfig = mode => {
       plugins: [
         new CleanWebpackPlugin(),
         new FriendlyErrorsWebpackPlugin(),
+        new webpack.EnvironmentPlugin(Object.keys(process.env)),
+        // new webpack.DefinePlugin(new webpack.EnvironmentPlugin(Object.keys(process.env))),
         new HtmlWebpackPlugin({
           title: "web-dev setup"
         })
