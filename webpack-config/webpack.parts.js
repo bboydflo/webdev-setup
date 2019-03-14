@@ -1,5 +1,5 @@
-const PurifyCSSPlugin = require("purifycss-webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurgeCssPlugin = require("purgecss-webpack-plugin");
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
@@ -22,16 +22,7 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
         rules: [
           {
             test: /\.(scss|sass)$/,
-            use: [
-              "style-loader",
-              "css-loader",
-              {
-                loader: "fast-sass-loader",
-                options: {
-                  // includePaths: [ ... ]
-                }
-              }
-            ]
+            use: ["style-loader", "css-loader", "fass-sass-loader"]
           }
         ]
       }
@@ -46,6 +37,11 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
           exclude,
 
           use: ["style-loader", "css-loader", "sass-loader"]
+          // use: [
+          //   "style-loader",
+          //   { loader: "css-loader", options: { url: false } },
+          //   "sass-loader"
+          // ]
         }
       ]
     }
@@ -74,8 +70,10 @@ exports.devServer = {
 
 exports.extractCSS = ({ include, exclude, use = [] }) => {
   // Output extracted CSS to a file
-  const plugin = new MiniCssExtractPlugin({
-    filename: "[name].css"
+  const plugin = new ExtractCssChunks({
+    filename: "css/[name].css",
+    chunkFilename: "[id].css",
+    orderWarning: true // Disable to remove warnings about conflicting order between imports
   });
 
   return {
@@ -85,8 +83,16 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
           test: /\.s?css$/,
           include,
           exclude,
-
-          use: [MiniCssExtractPlugin.loader].concat(use)
+          use: [
+            {
+              loader: ExtractCssChunks.loader,
+              options: {
+                hot: true, // if you want HMR - we try to automatically inject hot reloading but if it's not working, add it to the config
+                modules: true, // if you use cssModules, this can help.
+                reloadAll: true // when desperation kicks in - this is a brute force HMR flag
+              }
+            }
+          ].concat(use)
         }
       ]
     },
@@ -95,7 +101,7 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
 };
 
 exports.purifyCSS = ({ paths }) => ({
-  plugins: [new PurifyCSSPlugin({ paths })]
+  plugins: [new PurgeCssPlugin({ paths })]
 });
 
 exports.loadImages = ({ include, exclude, options } = {}) => ({
@@ -114,7 +120,10 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
         test: /\.svg$/,
         include,
         exclude,
-        use: "file-loader"
+        use: {
+          loader: "file-loader",
+          options
+        }
       }
     ]
   }
@@ -125,22 +134,11 @@ exports.loadFonts = () => ({
   module: {
     rules: [
       {
-        // Match woff2 in addition to patterns like .woff?v=1.1.1.
-        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(ttf|eot|woff|woff2)$/,
         use: {
-          loader: "url-loader",
+          loader: "file-loader",
           options: {
-            // Limit at 50k. Above that it emits separate files
-            limit: 50000,
-
-            // url-loader sets mimetype if it's passed.
-            // Without this it derives it from the file extension
-            mimetype: "application/font-woff",
-
-            // Output below fonts directory
-            name: "./fonts/[name].[ext]"
-
-            // publicPath: "fonts"
+            name: "fonts/[name].[ext]"
           }
         }
       }

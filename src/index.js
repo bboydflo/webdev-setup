@@ -4,7 +4,7 @@ import "./css/styles.scss";
 import svgIcon from "./images/ccheart_black.svg";
 
 ready(() => {
-  console.log("hello webpack");
+  console.log("hello florin");
 
   // testing images
   const img = document.createElement("img");
@@ -15,6 +15,7 @@ ready(() => {
 
   // testing woff fonts
   const h1 = document.createElement("h1");
-  h1.innerText = "Hello webpack";
+  h1.classList.add("fancy-text");
+  h1.innerText = "Hello florin";
   document.body.appendChild(h1);
 });
