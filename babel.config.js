@@ -1,4 +1,6 @@
 module.exports = api => {
+  api.cache(true);
+
   // allows lazy loading of modules and code splitting
   const plugins = ["@babel/plugin-syntax-dynamic-import"];
 
@@ -6,17 +8,21 @@ module.exports = api => {
   if (api.env("development")) {
     plugins.unshift("react-hot-loader/babel");
   }
-  return {
-    presets: [
-      [
-        "@babel/preset-env",
-        {
-          modules: false,
-          useBuiltIns: "usage"
-        }
-      ],
-      "@babel/preset-react"
+
+  const presets = [
+    [
+      "@babel/preset-env",
+      {
+        modules: false,
+        // useBuiltIns: "entry"
+        useBuiltIns: "usage"
+      }
     ],
+    "@babel/preset-react"
+  ];
+
+  return {
+    presets,
     plugins
   };
 };

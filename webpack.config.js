@@ -41,10 +41,10 @@ const productionConfig = merge([
   // })
 ]);
 
-module.exports = mode => {
+module.exports = (mode, options) => {
   if (mode === "development") {
     return merge(developmentConfig, commonConfig(mode), { mode });
   }
 
-  return merge(productionConfig, commonConfig(mode), { mode });
+  return merge(productionConfig, commonConfig(mode, options), { mode });
 };

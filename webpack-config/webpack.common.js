@@ -16,15 +16,18 @@ exports.paths = PATHS;
 
 exports.commonConfig = mode => {
   return merge([
-    parts.loadJS({ include: PATHS.src, exclude: /node_modules/ }),
-    parts.loadFonts(),
+    parts.loadJS({ mode, include: PATHS.src, exclude: /node_modules/ }),
+    parts.loadFonts({ mode }),
     parts.loadImages({
+      mode,
       options: {
         limit: 15000,
         name: "images/[name].[ext]"
       }
     }),
     {
+      mode,
+      stats: mode === "production" ? { warnings: false } : "minimal",
       output: {
         publicPath: "/"
       },

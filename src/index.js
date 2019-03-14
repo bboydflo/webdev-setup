@@ -1,3 +1,4 @@
+// import "@babel/polyfill";
 import { ready } from "./modules/utils";
 
 import "./css/styles.scss";
@@ -16,6 +17,6 @@ ready(() => {
   // testing woff fonts
   const h1 = document.createElement("h1");
   h1.classList.add("fancy-text");
-  h1.innerText = "Hello florin";
+  h1.innerText = "Hello webdev-setup!";
   document.body.appendChild(h1);
 });

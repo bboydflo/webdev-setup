@@ -1,5 +1,7 @@
 # web-dev setup
 
+Boilerplate starter including the necessary config to try out different libs
+
 Tasks
 
 ## install dependencies
@@ -12,6 +14,12 @@ npm install
 
 ```sh
 npm start
+```
+
+> Babel will compile to javascript supported by a specific list of browsers. To check this list run
+
+```sh
+npx browserslist
 ```
 
 ## build for production

@@ -7,7 +7,8 @@
     "start": "nodemon --watch webpack.config.js --exec \"webpack-dev-server --hot --env development\"",
     "start:prod": "webpack --env development",
     "build": "webpack --env production",
-    "build:stats": "webpack --env production --json > stats.json",
+    "build:stats": "webpack --env production --profile --json > stats.json",
+    "stats": "webpack --env production --json > stats.json && webpack-bundle-analyzer stats.json",
     "test": "npm test",
     "serve": "cd dist && serve -l 3000"
   },
@@ -44,11 +45,13 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
+    "webpack-bundle-analyzer": "^3.1.0",
+    "webpack-cli": "git+https://github.com/webpack/webpack-cli.git",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-hot-loader": "^4.8.0"
