@@ -1,5 +1,6 @@
 const PurgeCssPlugin = require("purgecss-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
   module: {
@@ -26,10 +27,10 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
               "style-loader",
               "css-loader",
               {
-                loader: "fast-sass-loader",
-                options: {
-                  // includePaths: [ ... ]
-                }
+                loader: "fast-sass-loader"
+                // options: {
+                //   // includePaths: [ ... ]
+                // }
               }
             ]
           }
@@ -46,6 +47,11 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
           exclude,
 
           use: ["style-loader", "css-loader", "sass-loader"]
+          // use: [
+          //   "style-loader",
+          //   { loader: "css-loader", options: { url: false } },
+          //   "sass-loader"
+          // ]
         }
       ]
     }
@@ -74,8 +80,15 @@ exports.devServer = {
 
 exports.extractCSS = ({ include, exclude, use = [] }) => {
   // Output extracted CSS to a file
-  const plugin = new MiniCssExtractPlugin({
-    filename: "css/[name].css"
+  // const plugin = new MiniCssExtractPlugin({
+  //   filename: "css/[name].css"
+  // });
+  const plugin = new ExtractCssChunks({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: "css/[name].css",
+    chunkFilename: "[id].css",
+    orderWarning: true // Disable to remove warnings about conflicting order between imports
   });
 
   return {
@@ -86,7 +99,17 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
           include,
           exclude,
 
-          use: [MiniCssExtractPlugin.loader].concat(use)
+          // use: [MiniCssExtractPlugin.loader].concat(use)
+          use: [
+            {
+              loader: ExtractCssChunks.loader,
+              options: {
+                hot: true, // if you want HMR - we try to automatically inject hot reloading but if it's not working, add it to the config
+                modules: true, // if you use cssModules, this can help.
+                reloadAll: true // when desperation kicks in - this is a brute force HMR flag
+              }
+            }
+          ].concat(use)
         }
       ]
     },

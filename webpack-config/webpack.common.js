@@ -29,6 +29,9 @@ exports.commonConfig = mode => {
     parts.loadFonts({ mode }),
 
     {
+      output: {
+        publicPath: "/" //     <----- this is been added
+      },
       resolve: {
         modules: ["node_modules", PATHS.context],
         extensions: [".js", ".jsx", ".json", ".css"]

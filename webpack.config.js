@@ -37,6 +37,15 @@ const productionConfig = merge([
   },
   parts.extractCSS({
     use: ["css-loader", "sass-loader"]
+    // use: [
+    //   {
+    //     loader: "css-loader",
+    //     options: {
+    //       url: false
+    //     }
+    //   },
+    //   "sass-loader"
+    // ]
   })
   // parts.purifyCSS({
   //   // paths: glob.sync(`${paths.src}/**/*`, { nodir: true })
