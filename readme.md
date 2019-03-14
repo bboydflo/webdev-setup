@@ -60,9 +60,10 @@ npm test
 
 - [ ] add [mini-html-webpack-plugin](https://www.npmjs.com/package/mini-html-webpack-plugin) to easier maintain the html template
 - [ ] experiment with different webpack-html-plugin plugins, check [this website](https://survivejs.com/webpack/developing/getting-started/)
-- [ ] testing with jest and cypress
-- [ ] storybook support
-- [ ] deploy to now, github pages, surge, etc.
-- [ ] CI setup
+- [ ] testing with jest and cypress and documentation
+- [ ] storybook support and documentation
+- [ ] deploy to now, github pages, surge, etc. and documentation
+- [ ] CI setup and documentation
 - [ ] fix `open-browser-webpack-plugin` security issue ([check this pr](https://github.com/baldore/open-browser-webpack-plugin/pull/30))
-- [ ] add yeoman generator
+- [ ] add yeoman generator and documentation
+- [ ] package management tasks/flow and documentation
