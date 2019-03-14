@@ -1,5 +1,4 @@
 const PurgeCssPlugin = require("purgecss-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ExtractCssChunks = require("extract-css-chunks-webpack-plugin");
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
@@ -23,16 +22,7 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
         rules: [
           {
             test: /\.(scss|sass)$/,
-            use: [
-              "style-loader",
-              "css-loader",
-              {
-                loader: "fast-sass-loader"
-                // options: {
-                //   // includePaths: [ ... ]
-                // }
-              }
-            ]
+            use: ["style-loader", "css-loader", "fass-sass-loader"]
           }
         ]
       }
@@ -80,12 +70,7 @@ exports.devServer = {
 
 exports.extractCSS = ({ include, exclude, use = [] }) => {
   // Output extracted CSS to a file
-  // const plugin = new MiniCssExtractPlugin({
-  //   filename: "css/[name].css"
-  // });
   const plugin = new ExtractCssChunks({
-    // Options similar to the same options in webpackOptions.output
-    // both options are optional
     filename: "css/[name].css",
     chunkFilename: "[id].css",
     orderWarning: true // Disable to remove warnings about conflicting order between imports
@@ -98,8 +83,6 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
           test: /\.s?css$/,
           include,
           exclude,
-
-          // use: [MiniCssExtractPlugin.loader].concat(use)
           use: [
             {
               loader: ExtractCssChunks.loader,
@@ -147,7 +130,7 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
 });
 
 // https://survivejs.com/webpack/loading/fonts/
-exports.loadFonts = ({ mode }) => ({
+exports.loadFonts = () => ({
   module: {
     rules: [
       {
@@ -155,9 +138,7 @@ exports.loadFonts = ({ mode }) => ({
         use: {
           loader: "file-loader",
           options: {
-            name: "fonts/[name].[ext]",
-            outputPath: mode === "development" ? "" : "/"
-            // publicPath: "/"
+            name: "fonts/[name].[ext]"
           }
         }
       }

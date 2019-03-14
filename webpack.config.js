@@ -1,4 +1,3 @@
-const glob = require("glob");
 const merge = require("webpack-merge");
 const webpack = require("webpack");
 const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
@@ -27,7 +26,6 @@ const developmentConfig = merge([
       new OpenBrowserPlugin({ url: `http://localhost:${devPort}` })
     ]
   },
-  // parts.loadImages(),
   parts.loadSCSS()
 ]);
 
@@ -37,21 +35,9 @@ const productionConfig = merge([
   },
   parts.extractCSS({
     use: ["css-loader", "sass-loader"]
-    // use: [
-    //   {
-    //     loader: "css-loader",
-    //     options: {
-    //       url: false
-    //     }
-    //   },
-    //   "sass-loader"
-    // ]
   })
   // parts.purifyCSS({
-  //   // paths: glob.sync(`${paths.src}/**/*`, { nodir: true })
-  //   paths: glob.sync(`${paths.src}/**/*`)
-  //   // paths: glob.sync(`${paths.dist}/**/*`, { nodir: true })
-  //   // paths: glob.sync(`/**/*`, { nodir: true })
+  //   paths: glob.sync(`${paths.src}/**/*`, { nodir: true })
   // })
 ]);
 

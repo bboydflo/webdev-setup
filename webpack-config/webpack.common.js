@@ -18,19 +18,16 @@ exports.paths = PATHS;
 exports.commonConfig = mode => {
   return merge([
     parts.loadJS({ include: PATHS.src, exclude: /node_modules/ }),
-    // parts.loadCSS(),
-
+    parts.loadFonts(),
     parts.loadImages({
       options: {
         limit: 15000,
         name: "images/[name].[ext]"
       }
     }),
-    parts.loadFonts({ mode }),
-
     {
       output: {
-        publicPath: "/" //     <----- this is been added
+        publicPath: "/"
       },
       resolve: {
         modules: ["node_modules", PATHS.context],

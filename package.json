@@ -9,7 +9,7 @@
     "build": "webpack --env production",
     "build:stats": "webpack --env production --json > stats.json",
     "test": "npm test",
-    "serve": "cd dist && serve"
+    "serve": "cd dist && serve -l 3000"
   },
   "keywords": [
     "webpack",
