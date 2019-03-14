@@ -1,8 +1,8 @@
 module.exports = api => {
   api.cache(true);
 
-  // allows lazy loading of modules and code splitting
   const plugins = [
+    // allows lazy loading of modules and code splitting
     "@babel/plugin-transform-runtime",
     "@babel/plugin-syntax-dynamic-import"
   ];
