@@ -42,6 +42,7 @@ const productionConfig = merge([
 ]);
 
 module.exports = (mode, options) => {
+  console.log(options);
   if (mode === "development") {
     return merge(developmentConfig, commonConfig(mode), { mode });
   }

@@ -1,4 +1,3 @@
-// import "@babel/polyfill";
 import { ready } from "./modules/utils";
 
 import "./css/styles.scss";

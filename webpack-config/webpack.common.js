@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
+const config = require("../package.json");
 const parts = require("./webpack.parts");
 
 const PATHS = {
@@ -15,7 +16,11 @@ const PATHS = {
 
 exports.paths = PATHS;
 
-exports.commonConfig = mode => {
+exports.commonConfig = (mode, options) => {
+  let publicPath = "/";
+  if (options && options.deploy) {
+    publicPath = `/${config.name}/`;
+  }
   return merge([
     parts.loadJS({ mode, include: PATHS.src, exclude: /node_modules/ }),
     parts.loadFonts({ mode }),
@@ -30,7 +35,7 @@ exports.commonConfig = mode => {
       mode,
       stats: mode === "production" ? { warnings: false } : "minimal",
       output: {
-        publicPath: "/"
+        publicPath
       },
       resolve: {
         modules: ["node_modules", PATHS.context],
