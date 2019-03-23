@@ -1,6 +1,4 @@
 module.exports = api => {
-  // api.cache(true);
-
   const plugins = [
     // allows lazy loading of modules and code splitting
     "@babel/plugin-transform-runtime",
