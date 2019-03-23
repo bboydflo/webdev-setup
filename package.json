@@ -9,7 +9,7 @@
     "test": "npm test",
     "start-prod": "webpack --env development",
     "build-stats": "webpack --env production --profile --json > stats.json",
-    "build-deploy": "webpack --env production --deploy true",
+    "build:deploy": "webpack --env production --deploy true",
     "stats": "webpack --env production --json > stats.json && webpack-bundle-analyzer stats.json",
     "serve-old": "cd dist && serve -l 3000",
     "serve": "cd dist && serve -l 3000",
