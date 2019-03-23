@@ -1,21 +1,9 @@
-import { ready } from "./modules/utils";
-
-import "./css/styles.scss";
-import svgIcon from "./images/ccheart_black.svg";
+import { ready } from "./js/utils";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './css/index.scss';
+import App from './js/App';
 
 ready(() => {
-  console.log("hello florin");
-
-  // testing images
-  const img = document.createElement("img");
-  img.width = 24;
-  img.height = 24;
-  img.src = svgIcon;
-  document.body.appendChild(img);
-
-  // testing woff fonts
-  const h1 = document.createElement("h1");
-  h1.classList.add("fancy-text");
-  h1.innerText = "Hello webdev-setup!";
-  document.body.appendChild(h1);
-});
+  ReactDOM.render(<App />, document.getElementById('root'));
+})

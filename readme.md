@@ -67,6 +67,8 @@ npm test
 ### Todo
 
 - [ ] add [mini-html-webpack-plugin](https://www.npmjs.com/package/mini-html-webpack-plugin) to easier maintain the html template
+- [ ] move config to a single folder
+- [ ] eventually update webpack config to use [webpack-config-plugins](https://github.com/namics/webpack-config-plugins)
 - [ ] experiment with different webpack-html-plugin plugins, check [this website](https://survivejs.com/webpack/developing/getting-started/)
 - [ ] testing with jest and cypress and documentation
 - [ ] storybook support and documentation

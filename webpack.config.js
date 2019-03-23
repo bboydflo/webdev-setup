@@ -1,10 +1,9 @@
 const merge = require("webpack-merge");
 const webpack = require("webpack");
-const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const OpenBrowserPlugin = require("open-browser-webpack-plugin");
 
-const parts = require("./webpack-config/webpack.parts");
-const { paths, commonConfig } = require("./webpack-config/webpack.common");
+const parts = require("./webpack.parts");
+const { paths, commonConfig } = require("./webpack.common");
 
 // development server port
 const devPort = process.env.PORT || 9000;
@@ -22,7 +21,6 @@ const developmentConfig = merge([
       // not sure is necessary when dev server doesn't use polling
       // https://survivejs.com/webpack/developing/webpack-dev-server/#polling-instead-of-watching-files
       new webpack.WatchIgnorePlugin([paths.nodeModules]),
-      new ErrorOverlayPlugin(),
       new OpenBrowserPlugin({ url: `http://localhost:${devPort}` })
     ]
   },
@@ -42,7 +40,6 @@ const productionConfig = merge([
 ]);
 
 module.exports = (mode, options) => {
-  console.log(options);
   if (mode === "development") {
     return merge(developmentConfig, commonConfig(mode), { mode });
   }
