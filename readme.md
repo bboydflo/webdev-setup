@@ -77,3 +77,4 @@ npm test
 - [ ] fix `open-browser-webpack-plugin` security issue ([check this pr](https://github.com/baldore/open-browser-webpack-plugin/pull/30))
 - [ ] add yeoman generator and documentation
 - [ ] package management tasks/flow and documentation
+- [ ] add example app using rest api (e.g. [rest countries api](https://restcountries.eu/))
