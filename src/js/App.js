@@ -1,29 +1,25 @@
-import React, { Component } from 'react';
-import { hot } from 'react-hot-loader/root'
-import logo from '../images/logo.svg';
-import '../css/App.scss';
+import React, { Component } from "react";
+import { hot } from "react-hot-loader/root";
 
-class App extends Component {
+class BootstrapApp extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="bootstrap-component">
+        <button type="button" className="btn btn-default btn-lg">
+          <span className="glyphicon glyphicon-star" aria-hidden="true" /> Star
+        </button>
+        <br />
+        <div className="alert alert-danger" role="alert">
+          <span
+            className="glyphicon glyphicon-exclamation-sign"
+            aria-hidden="true"
+          />
+          <span className="sr-only">Error:</span>
+          Enter a valid email address Florin!
+        </div>
       </div>
     );
   }
 }
 
-export default hot(App);
+export default hot(BootstrapApp);

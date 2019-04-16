@@ -22,7 +22,30 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
         rules: [
           {
             test: /\.(scss|sass)$/,
-            use: ["style-loader", "css-loader", "fass-sass-loader"]
+            // use: ["style-loader", "css-loader", "fass-sass-loader"]
+            use: [
+              {
+                // Adds CSS to the DOM by injecting a `<style>` tag
+                loader: "style-loader"
+              },
+              {
+                // Interprets `@import` and `url()` like `import/require()` and will resolve them
+                loader: "css-loader"
+              },
+              {
+                // Loader for webpack to process CSS with PostCSS
+                loader: "postcss-loader",
+                options: {
+                  plugins: function() {
+                    return [require("autoprefixer")];
+                  }
+                }
+              },
+              {
+                // Loads a SASS/SCSS file and compiles it to CSS
+                loader: "sass-loader"
+              }
+            ]
           }
         ]
       }
@@ -36,12 +59,35 @@ exports.loadSCSS = ({ mode, include, exclude } = {}) => {
           include,
           exclude,
 
-          use: ["style-loader", "css-loader", "sass-loader"]
           // use: [
           //   "style-loader",
           //   { loader: "css-loader", options: { url: false } },
           //   "sass-loader"
           // ]
+          // use: ["style-loader", "css-loader", "sass-loader"]
+          use: [
+            {
+              // Adds CSS to the DOM by injecting a `<style>` tag
+              loader: "style-loader"
+            },
+            {
+              // Interprets `@import` and `url()` like `import/require()` and will resolve them
+              loader: "css-loader"
+            },
+            {
+              // Loader for webpack to process CSS with PostCSS
+              loader: "postcss-loader",
+              options: {
+                plugins: function() {
+                  return [require("autoprefixer")];
+                }
+              }
+            },
+            {
+              // Loads a SASS/SCSS file and compiles it to CSS
+              loader: "sass-loader"
+            }
+          ]
         }
       ]
     }
