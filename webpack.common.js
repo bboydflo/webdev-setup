@@ -17,7 +17,6 @@ const PATHS = {
 exports.paths = PATHS;
 
 exports.commonConfig = (mode, options) => {
-  console.log(mode)
   let publicPath = "/";
   if (options && options.deploy) {
     publicPath = `/${config.name}/`;
