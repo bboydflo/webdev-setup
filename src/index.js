@@ -65,6 +65,11 @@ class FirebaseApp extends Component {
     console.log("on filter switch");
   }
 
+  onAddTodo(ev) {
+    ev.preventDefault();
+    console.log("on add todo");
+  }
+
   render() {
     const isLoggedIn = !!this.state.authState;
     const status = isLoggedIn ? this.state.authState.userName : "firebase demo";
@@ -112,7 +117,7 @@ class FirebaseApp extends Component {
             <div className="card-body">
               <h1 className="text-center">add todo's</h1>
 
-              <form>
+              <form onSubmit={this.onAddTodo}>
                 <div className="form-group">
                   <input
                     type="text"
