@@ -1,0 +1,44 @@
+.btn-toolbar {
+  display: flex;
+}
+
+.btn-toolbar label {
+  flex-grow: 1 !important;
+}
+
+.todo-list {
+  /* border: 1px solid red; */
+  margin-bottom: 1rem;
+}
+
+/* -------- this demo section -------- */
+
+.todo-item {
+  padding-left: 0;
+  padding-right: 0;
+  /* background-color: red; */
+}
+
+.todo-buttons {
+  float: right;
+}
+
+.todo-text {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.todo-edit,
+.todo-delete {
+  width: 72.8906px;
+}
+
+.editable-todo {
+  margin-bottom: 0;
+}
+
+.empty-list {
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+}
