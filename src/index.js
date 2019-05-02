@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import * as firebase from "firebase/app";
-import { firebaseProject, listenForAuthChanges } from "./js/firebase-setup";
+import {
+  signIn,
+  signOut,
+  getDatabase,
+  listenForAuthChanges,
+  generateTimestamp
+} from "./js/firebase-setup";
 import { ready } from "./js/utils";
+import { Todo } from "./js/todo";
 import "./css/FirebaseApp.scss";
+
+let database = null;
 
 const Menu = ({ title, onClick }) => {
   return (
@@ -21,43 +29,59 @@ const Menu = ({ title, onClick }) => {
   );
 };
 
+const TodoList = ({ todos }) => {
+  if (!todos || !todos.length) {
+    return <div className="empty-list">please add some todo's</div>;
+  }
+  return todos.map(todo => {
+    return (
+      <div key={todo.id} className="custom-control custom-checkbox todo-text">
+        <input
+          type="checkbox"
+          className="custom-control-input"
+          id={`customCheck${todo.id}`}
+        />
+        <label
+          className="custom-control-label"
+          htmlFor={`customCheck${todo.id}`}
+        >
+          {todo.done ? "<s>" + todo.text + "</s>" : todo.text}
+        </label>
+      </div>
+    );
+  });
+};
+
 class FirebaseApp extends Component {
   constructor() {
     super();
+
     this.state = {
       authState: null,
-      todos: []
+      todos: [],
+      todoInputValue: ""
     };
 
     listenForAuthChanges(authState => {
+      // get database only when we're authenticated and database reference is null
+      if (!!authState && !database) {
+        database = getDatabase();
+      } else {
+        database = null;
+      }
       this.setState({ authState });
     });
   }
 
-  signIn() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  }
-
-  signOut() {
-    firebase.auth().signOut();
-  }
-
-  saveTodo(text, done = false, callback = () => {}) {
-    return firebase
-      .firestore()
+  saveTodo(todo) {
+    if (!database) {
+      return;
+    }
+    return database()
       .collection("todos")
       .add({
-        text,
-        done,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      })
-      .then(resp => {
-        callback();
-      })
-      .catch(function(error) {
-        console.error("Error writing new message to Firebase Database", error);
-        callback(error);
+        ...todo,
+        timestamp: generateTimestamp
       });
   }
 
@@ -65,40 +89,51 @@ class FirebaseApp extends Component {
     console.log("on filter switch");
   }
 
-  onAddTodo(ev) {
+  onAddTodo = ev => {
     ev.preventDefault();
-    console.log("on add todo");
-  }
+    const currentTodoInputValue = this.state.todoInputValue;
+
+    if (!currentTodoInputValue) {
+      return;
+    }
+
+    const todo = Todo(currentTodoInputValue);
+
+    // update first in the state
+    this.setState(
+      {
+        todos: [...this.state.todos, todo],
+        todoInputValue: ""
+      },
+      () => {
+        this.saveTodo(todo)
+          .then(result => {
+            console.log(result);
+            // actually update update state
+          })
+          .catch(err => {
+            console.error(err);
+
+            // TODO: in case of error reverse the last operation
+          });
+      }
+    );
+  };
+
+  updateCurrentTodoInputValue = ev => {
+    this.setState({ todoInputValue: ev.target.value });
+  };
 
   render() {
-    const isLoggedIn = !!this.state.authState;
-    const status = isLoggedIn ? this.state.authState.userName : "firebase demo";
-
-    const TodoList = ({ todos }) => {
-      if (!todos || !todos.length) {
-        return <div className="empty-list">please add some todo's</div>;
-      }
-      return todos.map((todo, index) => {
-        return (
-          <div key={index} className="custom-control custom-checkbox todo-text">
-            <input
-              type="checkbox"
-              className="custom-control-input"
-              id={`customCheck${index}`}
-            />
-            <label className="custom-control-label" for={`customCheck${index}`}>
-              {todo.status ? "<s>" + todo.value + "</s>" : todo.value}
-            </label>
-          </div>
-        );
-      });
-    };
+    const { todos, authState, todoInputValue } = this.state;
+    const isLoggedIn = !!authState;
+    const status = isLoggedIn ? authState.userName : "firebase demo";
 
     return (
       <>
         <Menu
           title={isLoggedIn ? "Logout" : "Login"}
-          onClick={isLoggedIn ? this.signOut : this.signIn}
+          onClick={isLoggedIn ? signOut : signIn}
         />
         <div className="container">
           <p>Hello {status}!</p>
@@ -124,12 +159,14 @@ class FirebaseApp extends Component {
                     className="form-control form-control-lg"
                     id="new-todo"
                     placeholder="new todo"
+                    value={todoInputValue}
+                    onChange={this.updateCurrentTodoInputValue}
                   />
                 </div>
               </form>
 
               <ul className="list-group list-group-flush todo-list" />
-              <TodoList todos={this.state.todos} />
+              <TodoList todos={todos} />
               <div
                 className="btn-group btn-group-toggle btn-toolbar"
                 data-toggle="buttons"

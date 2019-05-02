@@ -60,6 +60,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.4",
     "firebase": "^5.10.1",
+    "nanoid": "^2.0.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-hot-loader": "^4.8.0"

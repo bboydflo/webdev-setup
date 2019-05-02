@@ -64,4 +64,29 @@ function listenForAuthChanges(callback) {
   _onAuthStateChangedObservers.push(callback);
 }
 
-export { firebaseProject, listenForAuthChanges, isUserSignedIn };
+function getDatabase() {
+  return firebase.database();
+}
+
+function signIn() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider);
+}
+
+function signOut() {
+  firebase.auth().signOut();
+}
+
+function generateTimeStamp() {
+  return firebase.firestore.FieldValue.serverTimestamp();
+}
+
+export {
+  signIn,
+  signOut,
+  firebaseProject,
+  listenForAuthChanges,
+  isUserSignedIn,
+  getDatabase,
+  generateTimeStamp
+};
