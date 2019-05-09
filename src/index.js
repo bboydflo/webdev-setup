@@ -160,8 +160,9 @@ class FirebaseApp extends Component {
                 </div>
               </form>
 
-              <ul className="list-group list-group-flush todo-list" />
-              <TodoList todos={todos} />
+              <ul className="list-group list-group-flush todo-list">
+                <TodoList todos={todos} />
+              </ul>
               <div
                 className="btn-group btn-group-toggle btn-toolbar"
                 data-toggle="buttons"
