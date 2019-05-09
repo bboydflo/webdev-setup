@@ -3,7 +3,7 @@ import * as firebase from "firebase/app";
 
 // Add the Firebase products that you want to use
 import "firebase/auth";
-import "firebase/database";
+import "firebase/firestore";
 
 const _onAuthStateChangedObservers = [];
 
@@ -44,13 +44,23 @@ function authStateObserver(user) {
     return;
   }
   if (user) {
+    // https://firebase.google.com/docs/auth/web/start?authuser=0
+    // var uid = user.uid;
+    // var email = user.email;
+    // var photoURL = user.photoURL;
+    // var displayName = user.displayName;
+
     // User is signed in!
-    const profilePicUrl = getProfilePicUrl();
-    const userName = getUserName();
+    // const userName = getUserName();
+    // const profilePicUrl = getProfilePicUrl();
 
     // notify every listener about login state
     _onAuthStateChangedObservers.map(callback => {
-      callback({ userName, profilePicUrl });
+      callback({
+        userId: user.uid,
+        userName: user.displayName,
+        profilePicUrl: user.photoURL
+      });
     });
   } else {
     // notify every listener about logout state
@@ -65,7 +75,7 @@ function listenForAuthChanges(callback) {
 }
 
 function getDatabase() {
-  return firebase.database();
+  return firebase.firestore();
 }
 
 function signIn() {
@@ -81,6 +91,17 @@ function generateTimeStamp() {
   return firebase.firestore.FieldValue.serverTimestamp();
 }
 
+function saveData(collectionName, data) {
+  // Add a new message entry to the Firebase database.
+  return firebase
+    .firestore()
+    .collection(collectionName)
+    .add({
+      ...data,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+}
+
 export {
   signIn,
   signOut,
@@ -88,5 +109,6 @@ export {
   listenForAuthChanges,
   isUserSignedIn,
   getDatabase,
-  generateTimeStamp
+  generateTimeStamp,
+  saveData
 };

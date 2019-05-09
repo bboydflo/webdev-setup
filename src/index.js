@@ -4,15 +4,12 @@ import ReactDOM from "react-dom";
 import {
   signIn,
   signOut,
-  getDatabase,
   listenForAuthChanges,
-  generateTimestamp
+  saveData
 } from "./js/firebase-setup";
 import { ready } from "./js/utils";
 import { Todo } from "./js/todo";
 import "./css/FirebaseApp.scss";
-
-let database = null;
 
 const Menu = ({ title, onClick }) => {
   return (
@@ -63,26 +60,8 @@ class FirebaseApp extends Component {
     };
 
     listenForAuthChanges(authState => {
-      // get database only when we're authenticated and database reference is null
-      if (!!authState && !database) {
-        database = getDatabase();
-      } else {
-        database = null;
-      }
       this.setState({ authState });
     });
-  }
-
-  saveTodo(todo) {
-    if (!database) {
-      return;
-    }
-    return database()
-      .collection("todos")
-      .add({
-        ...todo,
-        timestamp: generateTimestamp
-      });
   }
 
   onFilterSwitch() {
@@ -92,12 +71,27 @@ class FirebaseApp extends Component {
   onAddTodo = ev => {
     ev.preventDefault();
     const currentTodoInputValue = this.state.todoInputValue;
+    const isLoggedIn = !!this.state.authState;
 
-    if (!currentTodoInputValue) {
+    // no user logged in
+    if (!isLoggedIn) {
+      // TODO: throw an error and show it to the user
+      alert("need to login first");
       return;
     }
 
-    const todo = Todo(currentTodoInputValue);
+    // no value in the input field
+    if (!currentTodoInputValue) {
+      // TODO: throw an error and show it to the user
+      alert("you need to add a value");
+      return;
+    }
+
+    const todo = Todo(
+      currentTodoInputValue,
+      false,
+      this.state.authState.userId
+    );
 
     // update first in the state
     this.setState(
@@ -106,7 +100,8 @@ class FirebaseApp extends Component {
         todoInputValue: ""
       },
       () => {
-        this.saveTodo(todo)
+        // save data in firebase
+        saveData("todos", todo)
           .then(result => {
             console.log(result);
             // actually update update state
@@ -211,8 +206,5 @@ class FirebaseApp extends Component {
 }
 
 ready(() => {
-  // const database = firebaseProject.database();
-  // console.log(database);
-
   ReactDOM.render(<FirebaseApp />, document.getElementById("root"));
 });
